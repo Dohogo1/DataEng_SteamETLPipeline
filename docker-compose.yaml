@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: steam_postgres
+
+    environment:
+      POSTGRES_USER: steam
+      POSTGRES_PASSWORD: steam
+      POSTGRES_DB: steam_dw
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: steam_metabase
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./metabase_data:/metabase_data
+    environment:
+      - MB_DB_FILE=/metabase_data/metabase.db
+    depends_on:
+      - postgres
+
+  prefect-server:
+    image: prefecthq/prefect:2-python3.10
+    container_name: steam_prefect_server
+    command: prefect server start --host 0.0.0.0
+    ports:
+      - "4200:4200"
+    environment:
+      - PREFECT_API_URL=http://127.0.0.1:4200/api
+  
+  etl-pipeline:
+    build: .
+    container_name: steam_etl_pipeline
+    depends_on:
+      - postgres
+      - prefect-server
+    environment:
+      - PREFECT_API_URL=http://prefect-server:4200/api
+
+volumes:
+  postgres_data:
