@@ -11,7 +11,7 @@ A projektet Docker-ből lehet futtatni. Az első indításhoz a következő para
 
 A konténer felállása után elindul a pipeline, ezt a [prefect webes oldalán](http://localhost:4200/) lehet valós időben követni, az API hívások miatt 5-10 percig is eltelhet a futás.
 
-A pipeline lefutása után megtekinthető [Metabase Dashboardon](http://localhost:3000/) az ETL pipeline eredménye. A Metabase oldalán a ***viewer@steam.mb*** email cím, és ***A7g9^C4)s7*yz1***  jelszó beírásával lehet ezt elérni.
+A pipeline lefutása után megtekinthető [Metabase Dashboardon](http://localhost:3000/) az ETL pipeline eredménye. A Metabase oldalán a 'viewer@steam.mb' email cím, és 'A7g9^C4)s7*yz1'  jelszó beírásával lehet ezt elérni.
 
 ## Architektúra
 
